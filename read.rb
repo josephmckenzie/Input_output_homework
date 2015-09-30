@@ -12,8 +12,6 @@ end
  def read_write
 file = File.open("input_isbn_file.csv", "r")
 contents = file.read
-# I can choose to print it to the screen or just the file not sure what you want so ill put it in and just comment it so u know its there 
-#  puts contents   
  filename = "input_isbn_file_output.csv"
  somefile = File.open(filename, "w")
  somefile.puts contents
@@ -37,3 +35,7 @@ somefile.close
 end
 
 read_from_one_file_write_to_another
+
+
+
+
