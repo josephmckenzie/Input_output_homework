@@ -16,6 +16,12 @@ def test_removes_dashes_from_isbn
 	assert_equal("0321146530",remove_dashes_from_isbn("0-321-14653-0"))
 	end
 
+def test_isbn_array
+	assert_equal(["0","3","2","1","1","4","6","5","3","0"], isbn_number_array("0321146530"))
+end
+	
+	
+	
 def test_removes_spaces_from_isbn_number
 	assert_equal("0321146530",remove_spaces_from_isbn("0 321 14653 0"))
 	end

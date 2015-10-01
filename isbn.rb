@@ -46,7 +46,6 @@ def remove_spaces_from_isbn(isbn_number)
 	
 #splits the array up into indivual elements 
 def isbn_number_array(isbn_number)
-
 	isbn_number_array=isbn_number.split(//,)
 	end
 
