@@ -1,5 +1,5 @@
 require 'csv'
-
+require_relative "isbn.rb"
 
 def read_from_isbn_file
 	file_handle = File.open("input_isbn_file.csv", "r")
