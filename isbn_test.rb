@@ -45,7 +45,10 @@ def test_for_check_digit_10
 	 assert_equal(false,results2)
 	 assert_equal(false, results5)
       results4=isbn_checker("0321146530")  
-	 	 assert_equal(true,results4)
+	  results3=isbn_checker(["0321146530"])
+		 assert_equal(true,results3)
+		 assert_equal(true,results4)
+		
 	end
 
 def test_for_x
