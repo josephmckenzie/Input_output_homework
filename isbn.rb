@@ -1,102 +1,87 @@
-def isbn_checker(isbn_number)
-no_spaces_isbn = remove_spaces_from_isbn(isbn_number)
-no_dashes_isbn = remove_dashes_from_isbn(no_spaces_isbn)
-if verify_length(no_dashes_isbn) == true 
-isbn_array=isbn_number_array(isbn_number)
-check_digit_contains_X(isbn_number)
-check_digit_10_is_valid(isbn_array)
-check_digit_valid_13(isbn_number)
-else 
-false
-end
-end
-
-
-
-
-
-#this function verifies if the length of the isbn is a correct length of either 10 or 13
-
-def verify_length(isbn_number)
-  if isbn_number.length==10
-    true
-  elsif isbn_number.length==13
-  true
-  else
-    false
-  end
+def check_for_spaces_or_dashes(isbn)
+#if includes a space then delete space
+	if isbn.include? " "
+	isbn.delete! ' '
+#if includes a dash then delete dash	
+	else isbn.include? "-"
+	isbn.delete! '-'
+	end
+check_length_of_isbn(isbn)
+isbn
 end
 
-#function for removing dashes from the isbn number 
-def remove_dashes_from_isbn(isbn_number)
-  if isbn_number.include?"-"
-	 isbn_number.delete!"-"
-	 
-else isbn_number
-	  end
-	  end
-  
-#function for removing spaces from isbn number
-def remove_spaces_from_isbn(isbn_number)
-  if isbn_number.include?" "
-     isbn_number.delete!" " 
-	 else isbn_number	
-	end
-	end
-	
-#splits the array up into indivual elements 
-def isbn_number_array(isbn_number)
-	isbn_number_array=isbn_number.split(//,)
+def check_length_of_isbn(isbn)
+#spits array in to indivual elements
+@isbn_number = isbn.split ""
+#counts elements and tells us the legnth of array
+length = @isbn_number.count
+
+if length
+	 10
+	check_digit_contains_X(@isbn_number)
+		elsif only_numbers(@new_number) == true
+		false
+		else check_digit_10(@new_number)
+		end
+	if length 
+	13
+		check_digit_contains_X(@isbn_number)
+		elsif only_numbers(@isbn_number) == true
+		false
+		else check_digit_13(@isbn_number)
+		end
+	else false
+#detects the length and evualtes if it is true or false
+length == 10 or length == 13 ? true : false	
+end
+
+
+
+def check_digit_contains_X(number)
+#if lowercase or capt X then that x is equal to the number 10
+	if number[9] == "x" || number[9] == "X"
+	number[9] = "10"
 	end
 
-#checks to see if the isbn has a x in it or not 	
-def check_digit_contains_X(isbn_number)
-isbn_number = isbn_number.split(//,)
+@new_number = number
+end
 
-	if isbn_number[9] == "x" or isbn_number[9] == "X"
-	isbn_number[9] = 10
-	end
-	
-isbn_number[9] == 10
+def only_numbers(number)
+
+isbn = number.join("")
+#true if isbn only has digits in it 	
+	true if isbn =~ /[[:digit:]]/
 
 end
 
-#function to check for correct check digit	
-def check_digit_10_is_valid(isbn)
+def check_digit_10(number)
 array =[]
 
-
-	isbn.each do |value|
-	array << value.to_i 
-	end
-	
+	number.each do |value|
+	array << value.to_i end
 
 sum = 0
 
 	array.each.with_index do |value, index|
+#breaks out of the loop if condition is true	
 	break if index == 9
-	sum += value * (index + 1)
-	end
+	sum += (value * (index + 1)) end
 
 check_digit = sum%11
-
-		
-if check_digit == array[9]
+	
+	if check_digit == array[9]
 	true
-	else
-	false
+	else false
 	end
-
-check_digit == array[9]
+check_digit == array[9] ? true : false
 end
 
-#Checks for valid check digit
-def check_digit_valid_13(isbn)
+def check_digit_13(number)
+	
 array =[]
-isbn = isbn.split("")
-	isbn.each do |value|
-	array << value.to_i 
-	end
+
+	number.each do |value|
+	array << value.to_i end
 	
 sum = 0
 check_digit = 0
@@ -116,7 +101,10 @@ check_digit = 0
 		check_digit = 0
 		end
 		
-
-array[12] == check_digit
+	if array[12] == check_digit
+	true
+	else false
+	end
+#checks the 12 index pos and returns true or false based on what it finds
+	array[12] == check_digit ? true : false
 end
-
