@@ -1,110 +1,144 @@
-def check_for_spaces_or_dashes(isbn)
-#if includes a space then delete space
-	if isbn.include? " "
-	isbn.delete! ' '
-#if includes a dash then delete dash	
-	else isbn.include? "-"
-	isbn.delete! '-'
-	end
-check_length_of_isbn(isbn)
-isbn
-end
-
-def check_length_of_isbn(isbn)
-#spits array in to indivual elements
-@isbn_number = isbn.split ""
-#counts elements and tells us the legnth of array
-length = @isbn_number.count
-
-if length
-	 10
-	check_digit_contains_X(@isbn_number)
-		elsif only_numbers(@new_number) == true
-		false
-		else check_digit_10(@new_number)
-		end
-	if length 
-	13
-		check_digit_contains_X(@isbn_number)
-		elsif only_numbers(@isbn_number) == true
-		false
-		else check_digit_13(@isbn_number)
-		end
-	else false
-#detects the length and evualtes if it is true or false
-length == 10 or length == 13 ? true : false	
-end
-
-
-
-def check_digit_contains_X(number)
-#if lowercase or capt X then that x is equal to the number 10
-	if number[9] == "x" || number[9] == "X"
-	number[9] = "10"
-	end
-
-@new_number = number
-end
-
-def only_numbers(number)
-
-isbn = number.join("")
-#true if isbn only has digits in it 	
-	true if isbn =~ /[[:digit:]]/
+def read_file_and_output
+    file_old = File.open("input_isbn_file.csv","r")
+    file_name = "isbn_output_test.csv"
+    file_new = File.open(file_name, "w")
+    file_old.each do |line|valid_isbn?(line)
+        if @output == true
+          file_new.puts line.chomp + ",valid"
+        else @output == false
+          file_new.puts line.chomp + ",invalid"
+                    end
+        end
+    
+    file_new.close
 
 end
 
-def check_digit_10(number)
+def valid_isbn?(any_string)
+  no_dashes_or_spaces = remove_dashes_and_spaces_from_isbn(any_string)
+  if no_dashes_or_spaces.length == 10
+    check_digit_contains_X(no_dashes_or_spaces)
+    if test_for_non_numeric_characters(no_dashes_or_spaces) == false
+      @output = false
+    else
+  valid_isbn_10?(no_dashes_or_spaces) == true
+    end
+  
+  else no_dashes_or_spaces.length == 13
+    	check_digit_contains_X(no_dashes_or_spaces)
+		if test_for_non_numeric_characters(no_dashes_or_spaces) == false
+     
+	 @output = false
+    else
+    valid_isbn_13?(no_dashes_or_spaces)
+    end
+
+
+  end
+ 
+end
+
+
+def valid_isbn_10?(no_dashes_or_spaces)
+    no_dashes_or_spaces = no_dashes_or_spaces.split ""
+
 array =[]
 
-	number.each do |value|
-	array << value.to_i end
+    no_dashes_or_spaces.each do |value|
+    array << value.to_i 
+    end
+    
 
 sum = 0
 
-	array.each.with_index do |value, index|
-#breaks out of the loop if condition is true	
-	break if index == 9
-	sum += (value * (index + 1)) end
+    array.each.with_index do |value, index|
+    break if index == 9
+    sum += value * (index + 1)
+    end
 
-check_digit = sum%11
-	
-	if check_digit == array[9]
-	true
-	else false
-	end
-check_digit == array[9] ? true : false
+check_digit = sum % 11
+
+    if check_digit == array[9]
+     @output = true
+    else
+     @output =false
+    end
+    
 end
 
-def check_digit_13(number)
-	
-array =[]
+def valid_isbn_13?(no_dashes_or_spaces)
+no_dashes_or_spaces = no_dashes_or_spaces.split(//)
+ 
+ array =[]
+ 
+   no_dashes_or_spaces.each do |value|
+   array << value.to_i
+   end
+ 
+ sum = 0
+ check_digit = 0
+ 
+   array.each_with_index do |value,index|
+     break if index == 12
+         if index  %2 == 0
+           sum += value * 1
+          else
+           sum += value * 3
+         end
+ end
+       sum = sum %10
+   check_digit=(10-sum)
 
-	number.each do |value|
-	array << value.to_i end
-	
-sum = 0
-check_digit = 0
-	
-        array.each_with_index do |value, index|
-            break if index == 12
-			if index % 2 == 0
-            sum += value * 1
-            else
-            sum += value * 3
-			end 
-			end
-	sum = sum % 10
-    check_digit = (10 - sum)
-	
-		if check_digit == 10
-		check_digit = 0
-		end
-		
-	if array[12] == check_digit
-	true
-	else false
-	end
-#checks the 12 index pos and returns true or false based on what it finds
-	array[12] == check_digit ? true : false
+    if check_digit == 10
+       check_digit = 0
+     end
+
+     if array[12] == check_digit
+      @output = true
+     else
+      @output = false
+     end
+        
+ end
+
+
+def remove_dashes_and_spaces_from_isbn(isbn_number)
+    disallowed_characters = [ " ", "-"]
+    
+    disallowed_characters.each do |c|
+      isbn_number.delete! c if isbn_number.include? c
+    end
+    isbn_number
 end
+
+def verify_length(isbn_number)
+  isbn_number.length == 10 || isbn_number.length == 13
+end
+
+def check_digit_contains_X(no_dashes_or_spaces)
+   no_dashes_or_spaces = no_dashes_or_spaces.split("")
+  if no_dashes_or_spaces[9] == "x" || no_dashes_or_spaces[9] == "X"
+  no_dashes_or_spaces[9] = 10
+  end
+    if no_dashes_or_spaces[9] == 10
+	true
+     else
+     false
+    end
+  
+end
+
+def test_for_non_numeric_characters(no_dashes_or_spaces)
+   only_digits = no_dashes_or_spaces
+
+  if  only_digits =~ /\D/      #match any character that is not a digit
+	false
+  else
+    true
+  end
+
+end
+
+
+
+read_file_and_output
