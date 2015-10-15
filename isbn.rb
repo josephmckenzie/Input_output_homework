@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 require"csv"
 
   def read_file_and_output
@@ -25,7 +25,7 @@ no_dashes_or_spaces = remove_disallowed_from_isbn(any_string)
 	if no_dashes_or_spaces.length == 10
 		no_dashes_or_spaces_array = no_dashes_or_spaces.split("")
 		check_digit_x = change_check_digit(no_dashes_or_spaces_array)
-		if test_for_numeric_characters(check_digit_x)== false
+		if numeric_characters?(check_digit_x)== false
 		 false
 		else 
 		valid_isbn_10?(check_digit_x) 
@@ -33,7 +33,7 @@ no_dashes_or_spaces = remove_disallowed_from_isbn(any_string)
 	
 	elsif no_dashes_or_spaces.length == 13
 		no_dashes_or_spaces_array = no_dashes_or_spaces.split("")
-	   if  test_for_numeric_characters(no_dashes_or_spaces_array)== false
+	   if  numeric_characters?(no_dashes_or_spaces_array)== false
 	    false
 	   else
 		valid_isbn_13?(no_dashes_or_spaces_array)
@@ -69,7 +69,7 @@ check_digit = sum % 11
    
 end
 
-=======
+
 def read_file_and_output
     file_old = File.open("input_isbn_file.csv","r")
     file_name = "isbn_output_test.csv"
@@ -90,7 +90,7 @@ def valid_isbn?(any_string)
   no_dashes_or_spaces = remove_dashes_and_spaces_from_isbn(any_string)
   if no_dashes_or_spaces.length == 10
     check_digit_contains_X(no_dashes_or_spaces)
-    if test_for_non_numeric_characters(no_dashes_or_spaces) == false
+    if numeric_characters?(no_dashes_or_spaces) == false
       @output = false
     else
   valid_isbn_10?(no_dashes_or_spaces) == true
@@ -98,7 +98,7 @@ def valid_isbn?(any_string)
   
   else no_dashes_or_spaces.length == 13
     	check_digit_contains_X(no_dashes_or_spaces)
-		if test_for_non_numeric_characters(no_dashes_or_spaces) == false
+		if numeric_characters?(no_dashes_or_spaces) == false
      
 	 @output = false
     else
@@ -120,10 +120,9 @@ array =[]
     array << value.to_i 
     end
     
->>>>>>> cebbd7055b37a28db9225e1781ca8b1a39acda0f
 
 
-<<<<<<< HEAD
+
 def remove_disallowed_from_isbn(any_string)
     disallowed_characters = [ " ", "-", "\n", "\""]
     
@@ -183,7 +182,7 @@ def change_check_digit(array)
 	array
 end
 
-def test_for_numeric_characters(check_x)
+def numeric_characters?(check_x)
 
   if check_x =~ /\D/
      false
@@ -193,7 +192,7 @@ def test_for_numeric_characters(check_x)
   
 end
 read_file_and_output
-=======
+
     array.each.with_index do |value, index|
     break if index == 9
     sum += value * (index + 1)
@@ -285,4 +284,4 @@ end
 
 
 read_file_and_output
->>>>>>> cebbd7055b37a28db9225e1781ca8b1a39acda0f
+
