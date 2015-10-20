@@ -11,22 +11,22 @@ end
 
 
 def test_removes_dashes_from_isbn
-  assert_equal("0321146530",remove_disallowed_from_isbn("0-321-14653-0"))
-  assert_equal("1234567890123",remove_disallowed_from_isbn("12-345-678-9-0123"))
+  assert_equal("0321146530",remove_disallowed("0-321-14653-0"))
+  assert_equal("1234567890123",remove_disallowed("12-345-678-9-0123"))
   end
 
 
 def test_to_remove_spaces
-    assert_equal("1234567890", remove_disallowed_from_isbn("123 4567 890"))
-    assert_equal("1237362781", remove_disallowed_from_isbn("123 7362 781"))
+    assert_equal("1234567890", remove_disallowed("123 4567 890"))
+    assert_equal("1237362781", remove_disallowed("123 7362 781"))
 end 
 
 def test_with_spaces_and_hyphens
-    assert_equal("1234567890", remove_disallowed_from_isbn("1 2-3-4-5678-9 0"))
+    assert_equal("1234567890", remove_disallowed("1 2-3-4-5678-9 0"))
 end
 
 def test_with_sapces_and_hyphens_none
-	assert_equal("1234567890", remove_disallowed_from_isbn("1234567890"))
+	assert_equal("1234567890", remove_disallowed("1234567890"))
 	end
 	
 
@@ -53,11 +53,11 @@ end
 
 
 def test_for_numeric_characters_in_isbn
-  assert_equal(false,test_for_numeric_characters("jjjjjjjjjj"))
-  assert_equal(true,test_for_numeric_characters("1234567890120"))
-  assert_equal(false,test_for_numeric_characters("abd123def1230"))
-  assert_equal(false, test_for_numeric_characters("47804700590@"))
-  assert_equal(true,test_for_numeric_characters("1234567890"))
+  assert_equal(false,numeric_characters?(["j","j","j","j","j","j","j","j","j","j"]))
+  assert_equal(true,numeric_characters?(["1","2","3","4","5","6","7","8","9","0","1","2","0"]))
+  assert_equal(false,numeric_characters?(["a","b","d","1","2","3","d","e","f","1","2","3","0"]))
+  assert_equal(false,numeric_characters?(["4","7","8","0","4","7","0","0","5","9","0","@"]))
+  assert_equal(true,numeric_characters?(["1","2","3","4","5","6","7","8","9","0"]))
 end
 
 def test_for_valid_thirteen_digit_isbn
@@ -67,9 +67,5 @@ def test_for_valid_thirteen_digit_isbn
   assert_equal(true, valid_isbn?("9 78 0470-059-029"))
   assert_equal(true, valid_isbn?("978-0-13-149505-0"))
 end 
-
-
-
-
 
   end
